@@ -1,22 +1,21 @@
-{% set version = '0.36' %}
+{% set version = '0.36.1' %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
-{% set cran_mirror = 'https://cran.r-project.org' %}
 
 package:
   name: r-tensora
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: tensorA_{{ version }}.tar.gz
   url:
     - {{ cran_mirror }}/src/contrib/tensorA_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/tensorA/tensorA_{{ version }}.tar.gz
-  sha256: 97b3e72f26ca3a756d045008764d787a32c68f0a276fb7a29b6e1b4592fdecf6
+  sha256: c7ffe12b99867675b5e9c9f31798f9521f14305c9d9f9485b171bcbd8697d09c
 
 build:
-  number: 1
-  skip: true  # [win]
+  merge_build_host: True  # [win]
+  number: 0
+  skip: true  # [win32]
   rpaths:
     - lib/R/lib/
     - lib/
@@ -27,6 +26,11 @@ requirements:
     - {{native}}toolchain        # [win]
     - {{posix}}filesystem        # [win]
     - {{posix}}make
+    - {{posix}}sed  # [win]
+    - {{posix}}coreutils  # [win]
+    - {{posix}}sed               # [win]
+    - {{posix}}coreutils         # [win]
+    - {{posix}}zip               # [win]
   host:
     - r-base
   run:
@@ -41,10 +45,10 @@ test:
 about:
   home: http://www.stat.boogaart.de/tensorA
   license: GPL (>= 2)
-  summary: The package provides convenience functions for advance linear algebra with tensors
-    and computation with datasets of tensors on a higher level abstraction. It includes
-    Einstein and Riemann summing conventions, dragging, co- and contravariate indices,
-    parallel computations on sequences of tensors.
+  summary: Provides convenience functions for advanced linear algebra with tensors and computation
+    with datasets of tensors on a higher level abstraction. It includes Einstein and
+    Riemann summing conventions, dragging, co- and contravariate indices, parallel computations
+    on sequences of tensors.
   license_family: GPL3
   license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'  # [unix]
   license_file: '{{ environ["PREFIX"] }}\R\share\licenses\GPL-3'  # [win]
@@ -57,3 +61,4 @@ extra:
     - daler
     - jdblischak
     - cbrueffer
+    - dbast
