@@ -1,4 +1,4 @@
-{% set version = "0.36.2" %}
+{% set version = "0.36.2.1" %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -10,11 +10,11 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/tensorA_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/tensorA/tensorA_{{ version }}.tar.gz
-  sha256: 8e8947566bd3b65a54de4269df1abaa3d49cf5bfd2a963c3274a524c8a819ca7
+  sha256: 06588261fe7dff6a8edafe2b9d436b39a3b46c754f2ed327ae6322561a617db7
 
 build:
   merge_build_host: true  # [win]
-  number: 2
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
